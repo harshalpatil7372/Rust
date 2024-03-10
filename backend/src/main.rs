@@ -56,7 +56,7 @@ fn set_database() -> Result<(), PostgresError>{
 
 //GET REQUEST ID
 fn get_id(request: &str) -> &str {
-    request.split("/").nth(4).unwrap_or_default().split_whitespace().next().unwrap_or_default();
+    request.split("/").nth(4).unwrap_or_default().split_whitespace().next().unwrap_or_default()
 }
 
 fn get_user_request_body(request: &str) -> Result<User ,serde_json::Error> {
@@ -124,7 +124,7 @@ fn handle_post_request(request: &str) -> (String,String) {
 
 
 fn handle_get_request(request: &str) -> (String, String) {
-    match (get_id(&request),parse::<i32>(), Client::connect(DB_URL, NoTls)) {
+    match (get_id(&request).parse::<i32>(), Client::connect(DB_URL, NoTls)) {
         (Ok(id), Ok(mut client)) =>
             match client.query_one("SELECT * FROME user WHERE id = $1",&[&id]) {
                 Ok(row) => {

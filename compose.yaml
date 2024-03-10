@@ -1,7 +1,17 @@
 services:
+  nextapp:
+    container_name: nextapp
+    build:
+      context: ./frontend
+      dockerfile: next.dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8080
+    depends_on:
+      - rustapp
   rustapp:
     container_name: rustapp
-    image: francescoxx/rustapp:latest
     build:
        context: ./backend
        dockerfile: rust.Dockerfile
